@@ -2,10 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, NavLink, Route } from 'react-router-dom';
-import HomePage from './HomePage';
-import FuelSavingsPage from './containers/FuelSavingsPage';
-import AboutPage from './AboutPage';
-import NotFoundPage from './NotFoundPage';
+// import HomePage from './HomePage';
+// import FuelSavingsPage from './containers/FuelSavingsPage';
+// import AboutPage from './AboutPage';
+// import NotFoundPage from './NotFoundPage';
+import AddTodo from './AddTodo';
+import TodoItem from './TodoItem';
+import TodoList from './TodoList';
 
 // This is a class-based component because the current
 // version of hot reloading won't hot reload a stateless
@@ -16,7 +19,8 @@ class App extends React.Component {
     const activeStyle = { color: 'blue' };
     return (
       <div>
-        <div>
+
+        {/* <div>
           <NavLink exact to="/" activeStyle={activeStyle}>Home</NavLink>
           {' | '}
           <NavLink to="/fuel-savings" activeStyle={activeStyle}>Demo App</NavLink>
@@ -28,7 +32,10 @@ class App extends React.Component {
           <Route path="/fuel-savings" component={FuelSavingsPage} />
           <Route path="/about" component={AboutPage} />
           <Route component={NotFoundPage} />
-        </Switch>
+        </Switch> */}
+        <AddTodo></AddTodo>
+        <TodoItem></TodoItem>
+        <TodoList></TodoList>
       </div>
     );
   }
