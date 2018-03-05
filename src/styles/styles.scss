@@ -1,3 +1,7 @@
+@import './add-todo.scss';
+@import './todo-list.scss';
+@import './todo-item.scss';
+
 /* Variables */
 $vin-blue: #5bb7db;
 $vin-green: #60b044;
@@ -9,7 +13,7 @@ body {
   line-height: 1.4em;
   color: #4d4d4d;
   min-width: 230px;
-  max-width: 550px;
+  max-width: 100%;
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
@@ -29,3 +33,15 @@ h2 {
 .loss { color: $vin-red; }
 input.small { width: 46px; }
 td.fuel-savings-label { width: 175px; }
+
+.paper {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 25px;
+  margin: 100px 20px 100px 40px;
+}
+.title {
+  margin: 0 auto;
+  font-size: 42px;
+}

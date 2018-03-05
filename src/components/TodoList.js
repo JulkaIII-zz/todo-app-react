@@ -1,5 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Checkbox from 'material-ui/Checkbox';
 
 class TodoList extends React.Component {
     constructor(props) {
@@ -11,7 +14,14 @@ class TodoList extends React.Component {
 
     render() {
         return (
-            <div>TodoList</div>
+            <div className="todo-list">
+                <List >
+                    <Subheader>Here will be your todo items</Subheader>
+                    <ListItem primaryText="Notifications" leftCheckbox={<Checkbox />} />
+                    <ListItem primaryText="Sounds" leftCheckbox={<Checkbox />} />
+                    <ListItem primaryText="Video sounds" leftCheckbox={<Checkbox />} />
+                </List>
+            </div>
         )
     }
 }
