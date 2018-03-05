@@ -12,6 +12,9 @@ class AddTodo extends React.Component {
             open: false,
             todoText: ''
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleOpen = () => {
         this.setState({ open: true });
@@ -21,6 +24,34 @@ class AddTodo extends React.Component {
         this.setState({ open: false });
     };
 
+    handleChange(e) {
+        let newState = {};
+
+        newState[e.target.name] = e.target.value;
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({
+            [name]: value
+        });
+    }
+
+    handleSubmit(e, message) {
+        e.preventDefault();
+
+        let formData = {
+            todoText: this.state.todoText
+        };
+
+        fetch('/url', {
+            method: 'POST',
+            body: new FormData(formData)
+        }).then(function () {
+            alert('Yeah');
+        }, function () {
+            alert('POST failed')
+        });
+    }
+
     render() {
         const actions = [
             <FlatButton
@@ -29,14 +60,15 @@ class AddTodo extends React.Component {
                 onClick={this.handleClose}
             />,
             <FlatButton
+                type="submit"
                 label="Submit"
                 primary={true}
                 keyboardFocused={true}
-                onClick={this.handleClose}
+                onClick={this.handleSubmit}
             />,
         ];
         return (
-            <div>
+            <div id="form">
                 <FlatButton
                     className="add-button"
                     label="Add item"
@@ -55,6 +87,7 @@ class AddTodo extends React.Component {
                         hintText="Message Field"
                         floatingLabelText="What to remember?"
                         fullWidth={true}
+                        onChange={this.handleChange}
                     />
                 </Dialog>
             </div>
