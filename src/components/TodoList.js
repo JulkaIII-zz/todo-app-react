@@ -1,29 +1,33 @@
-import React from 'react';
-//import PropTypes from 'prop-types';
-import { List, ListItem } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import Checkbox from 'material-ui/Checkbox';
+import React from "react";
+import PropTypes from "prop-types";
+import TodoItem from "./TodoItem";
 
 class TodoList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            //todoText: ''
-        }
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        return (
-            <div className="todo-list">
-                <List >
-                    <Subheader>Here will be your todo items</Subheader>
-                    <ListItem primaryText="Notifications" leftCheckbox={<Checkbox />} />
-                    <ListItem primaryText="Sounds" leftCheckbox={<Checkbox />} />
-                    <ListItem primaryText="Video sounds" leftCheckbox={<Checkbox />} />
-                </List>
-            </div>
-        )
-    }
+  render() {
+    let todoList = this.props.listItems.map(item => {
+      return (
+        <TodoItem
+          key={item.id}
+          itemText={item.text}
+          removeItem={this.props.removeItem}
+          updateItem={this.props.updateItem}
+          id={item.id}
+          checked={item.checked}
+        />
+      );
+    });
+    return <div className="todo-list">{todoList}</div>;
+  }
 }
+
+TodoList.propTypes = {
+  removeItem: PropTypes.func,
+  updateItem: PropTypes.func,
+  listItems: PropTypes.array
+};
 
 export default TodoList;

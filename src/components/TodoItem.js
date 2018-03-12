@@ -1,33 +1,59 @@
-import React from 'react';
-//import PropTypes from 'prop-types';
-import { ListItem } from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
-import DeleteIcon from 'material-ui/svg-icons/action/delete';
-import IconButton from 'material-ui/IconButton';
-import { pink600 } from 'material-ui/styles/colors'
+import React from "react";
+import PropTypes from "prop-types";
+import { ListItem } from "material-ui/List";
+import Checkbox from "material-ui/Checkbox";
+import DeleteIcon from "material-ui/svg-icons/action/delete";
+import IconButton from "material-ui/IconButton";
+import { pink600 } from "material-ui/styles/colors";
 
 class TodoItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            //todoText: ''
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.remove = this.remove.bind(this);
+    this.update = this.update.bind(this);
+    this.state = {
+      checked: false
+    };
+  }
 
-    render() {
-        return (
-            <div className="todo-item">
-                <ListItem primaryText="Notifications"
-                    leftCheckbox={<Checkbox onClick={this.onClick} />}
-                    rightIconButton={
-                        <IconButton tooltip='remove' tooltipPosition='bottom-right' onClick={this.onClick} iconStyle={{ color: pink600 }}>
-                            <DeleteIcon />
-                        </IconButton>
-                    }
-                />
-            </div >
-        )
-    }
+  remove() {
+    this.props.removeItem(this.props.id);
+  }
+
+  update() {
+    this.props.updateItem(this.props.id);
+  }
+  render() {
+    return (
+      <div className="todo-item">
+        <ListItem
+          primaryText={this.props.itemText}
+          leftCheckbox={
+            <Checkbox
+              checked={this.state.checked || this.props.checked}
+              onClick={this.update}
+            />
+          }
+          rightIconButton={
+            <IconButton
+              tooltip="remove"
+              tooltipPosition="bottom-right"
+              onClick={this.onClick}
+              iconStyle={{ color: pink600 }}
+            >
+              <DeleteIcon onClick={this.remove} />
+            </IconButton>
+          }
+        />
+      </div>
+    );
+  }
 }
-
+TodoItem.propTypes = {
+  itemText: PropTypes.string,
+  id: PropTypes.string,
+  checked: PropTypes.bool,
+  removeItem: PropTypes.func,
+  updateItem: PropTypes.func
+};
 export default TodoItem;
