@@ -17,11 +17,11 @@ class TodoItem extends React.Component {
   }
 
   remove() {
-    this.props.removeItem(this.props.id);
+    this.props.removeItem(this.props.objectId);
   }
 
   update() {
-    this.props.updateItem(this.props.id);
+    this.props.updateItem(this.props.objectId);
   }
   render() {
     return (
@@ -51,7 +51,7 @@ class TodoItem extends React.Component {
 }
 TodoItem.propTypes = {
   itemText: PropTypes.string,
-  id: PropTypes.string,
+  objectId: PropTypes.string,
   checked: PropTypes.bool,
   removeItem: PropTypes.func,
   updateItem: PropTypes.func

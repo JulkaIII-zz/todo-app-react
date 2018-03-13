@@ -44,7 +44,7 @@ class AddTodo extends React.Component {
 
     this.props.addItem(formData);
     this.handleClose();
-    // fetch("/url", {
+    // fetch("url", {
     //   method: "POST",
     //   body: new FormData(formData)
     // }).then(

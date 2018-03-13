@@ -11,11 +11,11 @@ class TodoList extends React.Component {
     let todoList = this.props.listItems.map(item => {
       return (
         <TodoItem
-          key={item.id}
+          key={item.objectId}
           itemText={item.text}
           removeItem={this.props.removeItem}
           updateItem={this.props.updateItem}
-          id={item.id}
+          objectId={item.objectId}
           checked={item.checked}
         />
       );

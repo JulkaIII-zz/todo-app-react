@@ -25,32 +25,44 @@ class App extends React.Component {
   }
   // TODO: implement get request
   componentWillMount() {
-    let listItems = [
-      {
-        id: uuid(),
-        text: "Buy bananas",
-        checked: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        id: uuid(),
-        text: "Play tennis",
-        checked: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        id: uuid(),
-        text: "Play tennis",
-        checked: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }
-    ];
-    this.setState({
-      listItems: listItems
-    });
+    // let listItems = [
+    //   {
+    //     id: uuid(),
+    //     text: "Buy bananas",
+    //     checked: true,
+    //     createdAt: new Date(),
+    //     updatedAt: new Date()
+    //   },
+    //   {
+    //     id: uuid(),
+    //     text: "Play tennis",
+    //     checked: true,
+    //     createdAt: new Date(),
+    //     updatedAt: new Date()
+    //   },
+    //   {
+    //     id: uuid(),
+    //     text: "Play tennis",
+    //     checked: true,
+    //     createdAt: new Date(),
+    //     updatedAt: new Date()
+    //   }
+    // ];
+    let self = this;
+    let listItems = [];
+    let url =
+      "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/todo-items";
+    fetch(url)
+      .then(function(response) {
+        //console.log(response.json());
+        return response.json();
+      })
+      .then(function(json) {
+        listItems = json;
+        self.setState({
+          listItems: listItems
+        });
+      });
   }
 
   removeItem(id) {
