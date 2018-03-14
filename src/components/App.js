@@ -6,7 +6,6 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Paper from "material-ui/Paper";
 import AddTodo from "./AddTodo";
 import TodoList from "./TodoList";
-import uuid from "uuid";
 
 // This is a class-based component because the current
 // version of hot reloading won't hot reload a stateless
@@ -50,9 +49,9 @@ class App extends React.Component {
     // ];
     let self = this;
     let listItems = [];
-    let url =
+    let getUrl =
       "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/todo-items";
-    fetch(url)
+    fetch(getUrl)
       .then(function(response) {
         //console.log(response.json());
         return response.json();
@@ -66,48 +65,109 @@ class App extends React.Component {
   }
 
   removeItem(id) {
-    let newListItems = this.state.listItems.filter(item => {
-      if (item.id !== id) {
-        return item;
-      }
-    });
-    this.setState({
-      listItems: newListItems
-    });
+    let deleteUrl =
+      "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/todo-items";
+    let self = this;
+
+    fetch(deleteUrl, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        objectId: id
+      })
+    })
+      .then(response => {
+        if (response.ok) {
+          let newListItems = self.state.listItems.filter(item => {
+            if (item.objectId !== id) {
+              return item;
+            }
+          });
+          self.setState({
+            listItems: newListItems
+          });
+        } else {
+          console.log(response.statusText);
+        }
+      })
+      .catch(error => console.log("error is", error));
   }
 
-  addItem(form) {
-    let newListItems = this.state.listItems;
-    newListItems.unshift({
-      id: uuid(),
-      text: form.todoText,
-      checked: false,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    });
-    this.setState({
-      listItems: newListItems
-    });
+  addItem(formData) {
+    let postUrl =
+      "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/list-items";
+
+    let self = this;
+
+    fetch(postUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: formData.todoText
+      })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        let newListItems = self.state.listItems;
+        newListItems.unshift(json);
+        self.setState({
+          listItems: newListItems
+        });
+      })
+      .catch(error => console.log("error is", error));
   }
 
   updateItem(id) {
+    let body = {};
     let newListItems = this.state.listItems;
     newListItems.map(item => {
-      if (item.id === id) {
-        item.checked = !item.checked;
-        item.updatedAt = new Date();
+      if (item.objectId === id) {
+        body = {
+          objectId: id,
+          text: item.text,
+          checked: !item.checked
+        };
       }
     });
-    this.setState({
-      listItems: newListItems
-    });
+
+    let putUrl =
+      "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/todo-items";
+    let self = this;
+
+    fetch(putUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        newListItems.map(item => {
+          if (item.objectId === id) {
+            item.checked = json.checked;
+          }
+        });
+        self.setState({
+          listItems: newListItems
+        });
+      })
+      .catch(error => console.log("error is", error));
   }
 
   render() {
     return (
       <MuiThemeProvider>
         <Paper className="paper">
-          <div className="title">Todo List</div>
+          <div className="title"> Todo List </div>
           <AddTodo addItem={this.addItem} />
           <TodoList
             listItems={this.state.listItems}
