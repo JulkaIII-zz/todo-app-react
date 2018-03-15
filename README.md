@@ -1,6 +1,7 @@
 # React TODO application
 
 This project is generated with [react-slingshot](https://github.com/coryhouse/react-slingshot)
+
 Used [Backendless](https://backendless.com/) as backend.
 
 ## Environment preparation
