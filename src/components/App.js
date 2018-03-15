@@ -23,7 +23,7 @@ class App extends React.Component {
     this.updateItem = this.updateItem.bind(this);
   }
   // TODO: implement get request
-  componentWillMount() {
+  componentDidMount() {
     // let listItems = [
     //   {
     //     id: uuid(),
@@ -164,15 +164,20 @@ class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider>
-        <Paper className="paper">
-          <div className="title"> Todo List </div>
-          <AddTodo addItem={this.addItem} />
-          <TodoList
-            listItems={this.state.listItems}
-            removeItem={this.removeItem}
-            updateItem={this.updateItem}
-          />
-        </Paper>
+        <div>
+          <div className="header">
+            <img src="images/plan.png" />
+          </div>
+          <Paper className="paper">
+
+            <AddTodo addItem={this.addItem} />
+            <TodoList
+              listItems={this.state.listItems}
+              removeItem={this.removeItem}
+              updateItem={this.updateItem}
+            />
+          </Paper>
+        </div>
       </MuiThemeProvider>
     );
   }

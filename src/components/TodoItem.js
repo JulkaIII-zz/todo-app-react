@@ -32,6 +32,7 @@ class TodoItem extends React.Component {
             <Checkbox
               checked={this.state.checked || this.props.checked}
               onClick={this.update}
+              className={this.state.checked ? 'cross-out' : ''}
             />
           }
           rightIconButton={

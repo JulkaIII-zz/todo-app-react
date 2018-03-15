@@ -1,5 +1,11 @@
 .todo-item {
     text-align: left;
     display: flex;
-    margin: 0 auto;
+    margin: 10px auto;
+    label {
+        min-width: 180px;
+    }
+    .cross-out {
+        color: red;
+    }
 }
