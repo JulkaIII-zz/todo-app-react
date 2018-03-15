@@ -52,11 +52,11 @@ class App extends React.Component {
     let getUrl =
       "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/todo-items";
     fetch(getUrl)
-      .then(function(response) {
+      .then(function (response) {
         //console.log(response.json());
         return response.json();
       })
-      .then(function(json) {
+      .then(function (json) {
         listItems = json;
         self.setState({
           listItems: listItems
@@ -74,9 +74,7 @@ class App extends React.Component {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        objectId: id
-      })
+      body: id
     })
       .then(response => {
         if (response.ok) {
