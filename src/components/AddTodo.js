@@ -63,8 +63,7 @@ class AddTodo extends React.Component {
         key={1 + "_foo"}
       />
     ];
-    // let cancelKey = keyIndex(actions, 1);
-    // let submitKey = keyIndex(actions, 2)
+
     return (
       <div id="form">
         <FlatButton
