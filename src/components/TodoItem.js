@@ -27,12 +27,19 @@ class TodoItem extends React.Component {
     return (
       <div className="todo-item">
         <ListItem
-          primaryText={this.props.itemText}
+          primaryText={
+            <span
+              className={
+                this.state.checked || this.props.checked ? "cross-out" : ""
+              }
+            >
+              {this.props.itemText}
+            </span>
+          }
           leftCheckbox={
             <Checkbox
               checked={this.state.checked || this.props.checked}
               onClick={this.update}
-              className={this.state.checked ? 'cross-out' : ''}
             />
           }
           rightIconButton={
