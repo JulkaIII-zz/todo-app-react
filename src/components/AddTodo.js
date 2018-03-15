@@ -52,7 +52,7 @@ class AddTodo extends React.Component {
         label="Cancel"
         primary={true}
         onClick={this.handleClose}
-        key={Math.random}
+        key={0 + "_foo"}
       />,
       <FlatButton
         type="submit"
@@ -60,9 +60,11 @@ class AddTodo extends React.Component {
         primary={true}
         keyboardFocused={true}
         onClick={this.handleSubmit}
-        key={Math.random}
+        key={1 + "_foo"}
       />
     ];
+    // let cancelKey = keyIndex(actions, 1);
+    // let submitKey = keyIndex(actions, 2)
     return (
       <div id="form">
         <FlatButton
