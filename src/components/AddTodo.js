@@ -39,7 +39,8 @@ class AddTodo extends React.Component {
     e.preventDefault();
 
     let formData = {
-      todoText: this.state.todoText
+      todoText: this.state.todoText,
+      checked: false
     };
 
     this.props.addItem(formData);

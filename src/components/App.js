@@ -6,6 +6,7 @@ import Paper from "material-ui/Paper";
 import AddTodo from "./AddTodo";
 import TodoList from "./TodoList";
 import swal from "sweetalert";
+import Api from "./../api/Api";
 
 // This is a class-based component because the current
 // version of hot reloading won't hot reload a stateless
@@ -25,16 +26,8 @@ class App extends React.Component {
   componentDidMount() {
     let self = this;
     let listItems = [];
-    let getUrl =
-      "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/todo-items";
-    fetch(getUrl)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return Promise.reject(response.statusText);
-        }
-      })
+
+    Api.getItems()
       .then(json => {
         listItems = json;
         self.setState({
@@ -45,54 +38,31 @@ class App extends React.Component {
   }
 
   removeItem(id) {
-    let deleteUrl =
-      "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/todo-items";
     let self = this;
 
-    fetch(deleteUrl, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: id
-    }).then(response => {
-      if (response.ok) {
-        let newListItems = self.state.listItems.filter(item => {
-          if (item.objectId !== id) {
-            return item;
-          }
-        });
-        self.setState({
-          listItems: newListItems
-        });
-      } else {
-        swal("Something went wrong...", response.statusText, "error");
-      }
-    });
+    Api.deleteItem(id)
+      .then(response => {
+        if (response.ok) {
+          let newListItems = self.state.listItems.filter(item => {
+            if (item.objectId !== id) {
+              return item;
+            }
+          });
+          self.setState({
+            listItems: newListItems
+          });
+        } else {
+          swal("Something went wrong...", response.statusText, "error");
+        }
+      });
   }
 
   addItem(formData) {
-    let postUrl =
-      "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/list-items";
-
     let self = this;
+    let text = formData.todoText;
+    let checked = false;
 
-    fetch(postUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        text: formData.todoText
-      })
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return Promise.reject(response.statusText);
-        }
-      })
+    Api.addItem(text, checked)
       .then(json => {
         let newListItems = self.state.listItems;
         newListItems.unshift(json);
@@ -116,24 +86,9 @@ class App extends React.Component {
       }
     });
 
-    let putUrl =
-      "https://api.backendless.com/DCEDF76D-9662-324E-FF07-3C8BF4BBE100/F1870599-8446-F184-FFF4-DB8A4B81F800/services/TodoItemsService/todo-items";
     let self = this;
 
-    fetch(putUrl, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return Promise.reject(response.statusText);
-        }
-      })
+    Api.updateItem(body)
       .then(json => {
         newListItems.map(item => {
           if (item.objectId === id) {
