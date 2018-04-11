@@ -30,6 +30,8 @@
   "author": "Julia Shtohryn",
   "license": "MIT",
   "dependencies": {
+    "backendless": "4.3.5",
+    "material-ui": "0.20.0",
     "object-assign": "4.1.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
@@ -37,7 +39,8 @@
     "react-router-dom": "4.2.2",
     "react-router-redux": "5.0.0-alpha.6",
     "redux": "3.6.0",
-    "redux-thunk": "2.1.0"
+    "redux-thunk": "2.1.0",
+    "sweetalert": "2.1.0"
   },
   "devDependencies": {
     "autoprefixer": "7.1.4",
